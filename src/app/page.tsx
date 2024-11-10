@@ -81,8 +81,8 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center p-4 sm:p-6 md:p-8 lg:p-12 flex-col bg-[#241F25] text-[#E4E4E4]">
-      <div className="w-full max-w-md">
+    <div className=" w-full flex items-center justify-center p-4 sm:p-6 md:p-8 lg:p-12 flex-col bg-[#241F25] text-[#E4E4E4] border border-white mt-10">
+      <div className="w-full max-w-md  flex items-center justify-center">
         <GameName />
       </div>
       <div className="mt-8 sm:mt-12 md:mt-16 lg:mt-20 text-center">
@@ -95,7 +95,7 @@ export default function HomePage() {
         <p className="text-lg sm:text-xl md:text-2xl">on the blockchain?</p>
       </div>
       <Button
-        className={`mt-6 sm:mt-8 md:mt-10 px-6 py-2 text-sm sm:text-base md:text-lg font-medium rounded-full bg-slate-50 text-black hover:bg-slate-200 transition-colors duration-200
+        className={`mt-14 sm:mt-8 md:mt-10 px-6 py-6 text-sm sm:text-base md:text-lg font-medium rounded-full bg-slate-50 text-black hover:bg-slate-200 transition-colors duration-200
           ${isConnecting ? "opacity-50 cursor-not-allowed" : ""}`}
         onClick={connectWallet}
         disabled={isConnecting}
