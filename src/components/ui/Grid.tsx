@@ -100,6 +100,7 @@ export const Grid: React.FC<GridProps> = ({
         display: "inline-block",
         width: "fit-content",
         margin: "0 auto",
+        marginLeft: "630px",
       }}
     >
       {/* Previous guesses */}

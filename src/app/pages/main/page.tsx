@@ -14,7 +14,9 @@ export default function MainPage() {
   const router = useRouter();
   const [guesses, setGuesses] = useState<string[]>([]);
   const [currentGuess, setCurrentGuess] = useState("");
-  const [gameStatus, setGameStatus] = useState<"playing" | "won" | "lost">("playing");
+  const [gameStatus, setGameStatus] = useState<"playing" | "won" | "lost">(
+    "playing"
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [targetWord, setTargetWord] = useState("");
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
@@ -31,7 +33,7 @@ export default function MainPage() {
 
   useEffect(() => {
     const initAO = async () => {
-      if (walletAddress) {  // Add null check here
+      if (walletAddress) {
         await initializeAO(walletAddress);
       }
     };
@@ -53,9 +55,9 @@ export default function MainPage() {
         router.push("/");
         return;
       }
-      console.log(address)
+      console.log(address);
       setWalletAddress(address);
-      console.log(walletAddress)
+      console.log(walletAddress);
       startNewGame();
     } catch (error) {
       console.error("Wallet check error:", error);
@@ -162,9 +164,9 @@ export default function MainPage() {
 
   return (
     <div className="min-h-screen bg-[#241F25] text-[#E4E4E4] flex flex-col">
-      <main className="flex-1 flex flex-col items-center justify-center w-full max-w-[500px] mx-auto px-4 py-8">
-        <div className="w-full flex flex-col items-center justify-center gap-4 sm:gap-8">
-          <div className="w-full max-w-[350px] sm:max-w-[400px]">
+      <main className="flex-1 flex flex-col items-center justify-center w-full mx-auto px-4 py-8">
+        <div className="w-full flex flex-col items-center justify-center gap-4">
+          <div className="w-full">
             <Grid
               guesses={guesses}
               currentGuess={currentGuess}
@@ -173,7 +175,7 @@ export default function MainPage() {
             />
           </div>
 
-          <div className="w-full max-w-[380px] sm:max-w-[400px]">
+          <div className="w-full">
             <Keyboard
               currentGuess={currentGuess}
               setCurrentGuess={setCurrentGuess}
@@ -189,7 +191,7 @@ export default function MainPage() {
             <div className="text-center mt-4">
               <Button
                 onClick={startNewGame}
-                className="bg-gray-700 hover:bg-gray-600 text-sm sm:text-base px-4 py-2 sm:px-6 sm:py-3"
+                className="bg-gray-700 hover:bg-gray-600 px-4 py-2"
                 disabled={isLoading}
               >
                 Play Again
@@ -199,7 +201,7 @@ export default function MainPage() {
         </div>
       </main>
 
-      <footer className="text-center py-4 text-gray-400 text-sm sm:text-base">
+      <footer className="text-center py-4 text-gray-400">
         <p>Built by Vaishnavi</p>
       </footer>
     </div>

@@ -27,7 +27,7 @@ export const Keyboard: React.FC<KeyboardProps> = ({
 }) => {
   const getKeyColor = (key: string): string => {
     if (key === "ENTER" || key === "BACKSPACE") {
-      return "bg-gray-600 hover:bg-gray-500";
+      return "bg-gray-700 hover:bg-gray-600 text-gray-200";
     }
 
     let isCorrect = false;
@@ -64,21 +64,21 @@ export const Keyboard: React.FC<KeyboardProps> = ({
     });
 
     if (isCorrect) {
-      return "bg-[#6D994A] hover:bg-[##16a34a] text-white"; // Green for correct
+      return "bg-emerald-600 hover:bg-emerald-500 text-white";
     }
     if (isPresent) {
-      return "bg-[#695FA3] hover:bg-[##5749a6] text-white"; // Yellow for present
+      return "bg-amber-500 hover:bg-amber-400 text-white";
     }
     if (isUsed) {
-      return "bg-[#1f1f1f] hover:bg-gray-600 text-gray-300 border border-slate-700"; // Gray for used but not in word
+      return "bg-gray-600 hover:bg-gray-500 text-gray-300";
     }
-    return "bg-[#3C373D] hover:bg-gray-500"; // Default color
+    return "bg-gray-400 hover:bg-gray-300 text-gray-800";
   };
 
   return (
-    <div className="mb-2">
+    <div className="mx-auto p-4 bg-gray-100 rounded-lg shadow-lg">
       {KEYBOARD_ROWS.map((row, rowIndex) => (
-        <div key={rowIndex} className="flex justify-center gap-1 mb-2">
+        <div key={rowIndex} className="flex justify-center gap-1.5 mb-1.5">
           {row.map((key) => (
             <Button
               key={key}
@@ -94,11 +94,12 @@ export const Keyboard: React.FC<KeyboardProps> = ({
                 }
               }}
               className={`${
-                key === "ENTER" || key === "BACKSPACE" ? "w-36" : "w-28"
-              } h-14 p-0 
-                         text-sm font-semibold transition-colors duration-200 ${getKeyColor(
+                key === "ENTER" || key === "BACKSPACE" ? "w-16" : "w-10"
+              } h-14 p-0 rounded-md
+                         text-sm font-bold transition-all duration-200 ${getKeyColor(
                            key
-                         )}`}
+                         )}
+                         shadow-md hover:shadow-lg transform hover:-translate-y-0.5`}
               disabled={gameStatus !== "playing" || isLoading}
             >
               {key === "BACKSPACE" ? "←" : key}
