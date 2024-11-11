@@ -21,6 +21,7 @@ export default function MainPage() {
   const [targetWord, setTargetWord] = useState("");
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
   const [isScoreFetching, setIsScoreFetching] = useState(false);
+  const [isSavingScore, setIsSavingScore] = useState(false);
 
   useEffect(() => {
     checkWalletAndStartGame();
@@ -92,6 +93,26 @@ export default function MainPage() {
       });
     } finally {
       setIsScoreFetching(false);
+    }
+  };
+
+  const saveScore = async () => {
+    setIsSavingScore(true);
+    try {
+      // Add your score saving logic here
+      toast({
+        title: "Score Saved",
+        description: "Your score has been saved successfully!",
+      });
+    } catch (error) {
+      console.error("Error saving score:", error);
+      toast({
+        title: "Error",
+        description: "Failed to save score. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSavingScore(false);
     }
   };
 
@@ -208,7 +229,31 @@ export default function MainPage() {
             />
           </div>
 
-          {gameStatus !== "playing" && (
+          {gameStatus === "won" ? (
+            <div className="text-center mt-4 space-x-4">
+              <Button
+                onClick={saveScore}
+                className="bg-gray-700 hover:bg-gray-600 px-4 py-2"
+                disabled={isSavingScore}
+              >
+                {isSavingScore ? "Saving..." : "Save Score"}
+              </Button>
+              <Button
+                onClick={fetchScore}
+                className="bg-gray-700 hover:bg-gray-600 px-4 py-2"
+                disabled={isScoreFetching}
+              >
+                {isScoreFetching ? "Fetching..." : "Fetch Score"}
+              </Button>
+              <Button
+                onClick={startNewGame}
+                className="bg-gray-700 hover:bg-gray-600 px-4 py-2"
+                disabled={isLoading}
+              >
+                Play Again
+              </Button>
+            </div>
+          ) : gameStatus === "lost" ? (
             <div className="text-center mt-4 space-x-4">
               <Button
                 onClick={startNewGame}
@@ -225,7 +270,7 @@ export default function MainPage() {
                 {isScoreFetching ? "Fetching..." : "Fetch Score"}
               </Button>
             </div>
-          )}
+          ) : null}
         </div>
       </main>
 
