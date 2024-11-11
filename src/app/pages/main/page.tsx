@@ -95,7 +95,7 @@ export default function MainPage() {
         console.log("Score:", fetchedScore);
         toast({
           title: "Score Fetched",
-          description: Your current score is ${fetchedScore}!,
+          description: `Your current score is ${fetchedScore}!`,
         });
       } else {
         throw new Error("Invalid score format received");
@@ -172,7 +172,7 @@ export default function MainPage() {
         await storeGameResult(false, 6);
         toast({
           title: "Game Over",
-          description: The word was ${targetWord}. Better luck next time!,
+          description: `The word was ${targetWord}. Better luck next time!`,
         });
       }
     } catch (error) {
