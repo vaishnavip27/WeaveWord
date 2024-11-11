@@ -67,7 +67,7 @@ export const Keyboard: React.FC<KeyboardProps> = ({
       return "bg-emerald-600 hover:bg-emerald-500 text-white";
     }
     if (isPresent) {
-      return "bg-amber-500 hover:bg-amber-400 text-white";
+      return "bg-[#5749a6] hover:bg-amber-400 text-white";
     }
     if (isUsed) {
       return "bg-gray-600 hover:bg-gray-500 text-gray-300";
@@ -76,7 +76,7 @@ export const Keyboard: React.FC<KeyboardProps> = ({
   };
 
   return (
-    <div className="mx-auto p-4 bg-gray-100 rounded-lg shadow-lg">
+    <div className="mx-auto p-4 rounded-lg shadow-lg backdrop-blur-md bg-white/10 border border-white/20">
       {KEYBOARD_ROWS.map((row, rowIndex) => (
         <div key={rowIndex} className="flex justify-center gap-1.5 mb-1.5">
           {row.map((key) => (

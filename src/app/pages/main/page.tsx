@@ -22,6 +22,7 @@ export default function MainPage() {
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
   const [isScoreFetching, setIsScoreFetching] = useState(false);
   const [isSavingScore, setIsSavingScore] = useState(false);
+  const [score, setScore] = useState<number>(0);
 
   useEffect(() => {
     checkWalletAndStartGame();
@@ -208,6 +209,13 @@ export default function MainPage() {
     <div className="min-h-screen bg-[#241F25] text-[#E4E4E4] flex flex-col">
       <main className="flex-1 flex flex-col items-center justify-center w-full mx-auto px-4 py-8">
         <div className="w-full flex flex-col items-center justify-center gap-4">
+          <div className="w-full flex justify-end mb-2">
+            <div className="bg-gray-700 px-4 py-2 rounded-lg">
+              <span className="font-bold">Score: </span>
+              <span>{score}</span>
+            </div>
+          </div>
+
           <div className="w-full">
             <Grid
               guesses={guesses}
@@ -229,48 +237,31 @@ export default function MainPage() {
             />
           </div>
 
-          {gameStatus === "won" ? (
-            <div className="text-center mt-4 space-x-4">
+          <div className="text-center mt-4 space-x-3">
+            {gameStatus === "won" && (
               <Button
                 onClick={saveScore}
-                className="bg-gray-700 hover:bg-gray-600 px-4 py-2"
+                className="bg-gray-700 hover:bg-gray-600 px-5 py-3"
                 disabled={isSavingScore}
               >
                 {isSavingScore ? "Saving..." : "Save Score"}
               </Button>
-              <Button
-                onClick={fetchScore}
-                className="bg-gray-700 hover:bg-gray-600 px-4 py-2"
-                disabled={isScoreFetching}
-              >
-                {isScoreFetching ? "Fetching..." : "Fetch Score"}
-              </Button>
-              <Button
-                onClick={startNewGame}
-                className="bg-gray-700 hover:bg-gray-600 px-4 py-2"
-                disabled={isLoading}
-              >
-                Play Again
-              </Button>
-            </div>
-          ) : gameStatus === "lost" ? (
-            <div className="text-center mt-4 space-x-4">
-              <Button
-                onClick={startNewGame}
-                className="bg-gray-700 hover:bg-gray-600 px-4 py-2"
-                disabled={isLoading}
-              >
-                Play Again
-              </Button>
-              <Button
-                onClick={fetchScore}
-                className="bg-gray-700 hover:bg-gray-600 px-4 py-2"
-                disabled={isScoreFetching}
-              >
-                {isScoreFetching ? "Fetching..." : "Fetch Score"}
-              </Button>
-            </div>
-          ) : null}
+            )}
+            <Button
+              onClick={startNewGame}
+              className="bg-gray-700 hover:bg-gray-600 px-5 py-3"
+              disabled={isLoading}
+            >
+              Play Again
+            </Button>
+            <Button
+              onClick={fetchScore}
+              className="bg-gray-700 hover:bg-gray-600 px-5 py-3"
+              disabled={isScoreFetching}
+            >
+              {isScoreFetching ? "Fetching..." : "Fetch Score"}
+            </Button>
+          </div>
         </div>
       </main>
 
