@@ -119,7 +119,7 @@ export default function Navbar() {
                 WORDWEAVE
               </Link>
             </div>
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-2">
               {walletAddress && (
                 <div className="relative" ref={dropdownRef}>
                   <Button

@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { WORD_LIST } from "../../../services/wordList";
 import { useRouter } from "next/navigation";
 
-import { initializeAO } from "@/utils/ao";
+import { initializeAO, saveScoreInProcess, fetchPlayerScore } from "@/utils/ao";
 
 export default function MainPage() {
   const router = useRouter();
@@ -19,10 +19,11 @@ export default function MainPage() {
   );
   const [isLoading, setIsLoading] = useState(false);
   const [targetWord, setTargetWord] = useState("");
-  const [walletAddress, setWalletAddress] = useState<string | null>(null);
   const [isScoreFetching, setIsScoreFetching] = useState(false);
   const [isSavingScore, setIsSavingScore] = useState(false);
   const [score, setScore] = useState<number>(0);
+  const [walletAddress, setWalletAddress] = useState<string | null>(null);
+
 
   useEffect(() => {
     checkWalletAndStartGame();
@@ -38,6 +39,10 @@ export default function MainPage() {
     const initAO = async () => {
       if (walletAddress) {
         await initializeAO(walletAddress);
+        const fetchedScore = await fetchPlayerScore();
+        console.log(fetchedScore);
+        // Fix: Ensure fetchedScore is a number, or provide a default value
+        setScore(typeof fetchedScore === 'number' ? fetchedScore : 0);
       }
     };
 
@@ -68,6 +73,8 @@ export default function MainPage() {
     }
   };
 
+
+
   const startNewGame = () => {
     const randomWord = WORD_LIST[Math.floor(Math.random() * WORD_LIST.length)];
     console.log("Target Word:", randomWord); // For testing
@@ -80,11 +87,19 @@ export default function MainPage() {
   const fetchScore = async () => {
     setIsScoreFetching(true);
     try {
-      // Add your score fetching logic here
-      toast({
-        title: "Score Fetched",
-        description: "Your current score has been retrieved!",
-      });
+      const fetchedScore = await fetchPlayerScore();
+
+      // Ensure the fetched score is a number
+      if (typeof fetchedScore === 'number') {
+        setScore(fetchedScore);
+        console.log("Score:", fetchedScore);
+        toast({
+          title: "Score Fetched",
+          description: Your current score is ${fetchedScore}!,
+        });
+      } else {
+        throw new Error("Invalid score format received");
+      }
     } catch (error) {
       console.error("Error fetching score:", error);
       toast({
@@ -100,11 +115,16 @@ export default function MainPage() {
   const saveScore = async () => {
     setIsSavingScore(true);
     try {
-      // Add your score saving logic here
-      toast({
-        title: "Score Saved",
-        description: "Your score has been saved successfully!",
-      });
+      // Fix: Check if walletAddress is not null before using it
+      if (walletAddress) {
+        await saveScoreInProcess(walletAddress, 100);
+        toast({
+          title: "Score Saved",
+          description: "Your score has been saved successfully!",
+        });
+      } else {
+        throw new Error("Wallet address is not available");
+      }
     } catch (error) {
       console.error("Error saving score:", error);
       toast({
@@ -152,7 +172,7 @@ export default function MainPage() {
         await storeGameResult(false, 6);
         toast({
           title: "Game Over",
-          description: `The word was ${targetWord}. Better luck next time!`,
+          description: The word was ${targetWord}. Better luck next time!,
         });
       }
     } catch (error) {
