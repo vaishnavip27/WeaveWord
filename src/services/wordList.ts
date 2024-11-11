@@ -2448,6 +2448,7 @@ export const WORD_LIST = [
   "SINKS",
   "SINUS",
   "SITED",
+  "SHORT",
   "SITES",
   "SIXTH",
   "SIXTY",

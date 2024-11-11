@@ -20,6 +20,7 @@ export default function MainPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [targetWord, setTargetWord] = useState("");
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
+  const [isScoreFetching, setIsScoreFetching] = useState(false);
 
   useEffect(() => {
     checkWalletAndStartGame();
@@ -72,6 +73,26 @@ export default function MainPage() {
     setGuesses([]);
     setCurrentGuess("");
     setGameStatus("playing");
+  };
+
+  const fetchScore = async () => {
+    setIsScoreFetching(true);
+    try {
+      // Add your score fetching logic here
+      toast({
+        title: "Score Fetched",
+        description: "Your current score has been retrieved!",
+      });
+    } catch (error) {
+      console.error("Error fetching score:", error);
+      toast({
+        title: "Error",
+        description: "Failed to fetch score. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsScoreFetching(false);
+    }
   };
 
   const submitGuess = async () => {
@@ -188,13 +209,20 @@ export default function MainPage() {
           </div>
 
           {gameStatus !== "playing" && (
-            <div className="text-center mt-4">
+            <div className="text-center mt-4 space-x-4">
               <Button
                 onClick={startNewGame}
                 className="bg-gray-700 hover:bg-gray-600 px-4 py-2"
                 disabled={isLoading}
               >
                 Play Again
+              </Button>
+              <Button
+                onClick={fetchScore}
+                className="bg-gray-700 hover:bg-gray-600 px-4 py-2"
+                disabled={isScoreFetching}
+              >
+                {isScoreFetching ? "Fetching..." : "Fetch Score"}
               </Button>
             </div>
           )}

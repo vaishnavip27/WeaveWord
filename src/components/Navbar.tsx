@@ -124,7 +124,7 @@ export default function Navbar() {
                 <div className="relative" ref={dropdownRef}>
                   <Button
                     variant="ghost"
-                    className="border-2 border-slate-600 rounded-full hover:bg-slate-800 px-4 py-2 text-sm flex items-center gap-2"
+                    className="border-2 border-slate-600 bg-[#241F25] rounded-full hover:bg-slate-800 px-4 py-2 text-sm flex items-center gap-2"
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                   >
                     <Wallet className="h-4 w-4" />
@@ -132,7 +132,7 @@ export default function Navbar() {
                   </Button>
 
                   {isDropdownOpen && (
-                    <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-black border border-slate-600 overflow-hidden">
+                    <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-[#241F25] border border-slate-600 overflow-hidden">
                       <Button
                         variant="ghost"
                         className="w-full px-4 py-2 text-sm text-white hover:bg-slate-800 flex items-center gap-2 justify-start"
