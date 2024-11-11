@@ -18,80 +18,60 @@ const leaderboardData = [
     player: "WordMaster",
     score: 10000,
     gamesPlayed: 100,
-    winRate: "95%",
-    averageGuesses: 3.2,
   },
   {
     rank: 2,
     player: "LexiconLegend",
     score: 9500,
     gamesPlayed: 95,
-    winRate: "92%",
-    averageGuesses: 3.5,
   },
   {
     rank: 3,
     player: "VocabVirtuoso",
     score: 9000,
     gamesPlayed: 90,
-    winRate: "90%",
-    averageGuesses: 3.7,
   },
   {
     rank: 4,
     player: "SpellingSpecialist",
     score: 8500,
     gamesPlayed: 85,
-    winRate: "88%",
-    averageGuesses: 3.9,
   },
   {
     rank: 5,
     player: "GrammarGuru",
     score: 8000,
     gamesPlayed: 80,
-    winRate: "85%",
-    averageGuesses: 4.1,
   },
   {
     rank: 6,
     player: "WordWizard",
     score: 7500,
     gamesPlayed: 75,
-    winRate: "83%",
-    averageGuesses: 4.2,
   },
   {
     rank: 7,
     player: "LetterLord",
     score: 7000,
     gamesPlayed: 70,
-    winRate: "80%",
-    averageGuesses: 4.3,
   },
   {
     rank: 8,
     player: "SyntaxSage",
     score: 6500,
     gamesPlayed: 65,
-    winRate: "78%",
-    averageGuesses: 4.4,
   },
   {
     rank: 9,
     player: "PuzzlePro",
     score: 6000,
     gamesPlayed: 60,
-    winRate: "75%",
-    averageGuesses: 4.5,
   },
   {
     rank: 10,
     player: "WordSmith",
     score: 5500,
     gamesPlayed: 55,
-    winRate: "73%",
-    averageGuesses: 4.6,
   },
 ];
 
@@ -134,12 +114,6 @@ export default function Leaderboard() {
                     <TableHead className="text-right text-gray-400">
                       Games Played
                     </TableHead>
-                    <TableHead className="text-right text-gray-400">
-                      Win Rate
-                    </TableHead>
-                    <TableHead className="text-right text-gray-400">
-                      Avg. Guesses
-                    </TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -156,12 +130,6 @@ export default function Leaderboard() {
                       </TableCell>
                       <TableCell className="text-right text-white">
                         {player.gamesPlayed}
-                      </TableCell>
-                      <TableCell className="text-right text-white">
-                        {player.winRate}
-                      </TableCell>
-                      <TableCell className="text-right text-white">
-                        {player.averageGuesses}
                       </TableCell>
                     </TableRow>
                   ))}

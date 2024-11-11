@@ -77,7 +77,7 @@ export default function MainPage() {
 
   const startNewGame = () => {
     const randomWord = WORD_LIST[Math.floor(Math.random() * WORD_LIST.length)];
-    console.log("Target Word:", randomWord); // For testing
+    // console.log("Target Word:", randomWord); // For testing
     setTargetWord(randomWord);
     setGuesses([]);
     setCurrentGuess("");
