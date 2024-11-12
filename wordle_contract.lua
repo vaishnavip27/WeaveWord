@@ -13,6 +13,7 @@ Handlers.add("Initialize",
             print("Initialize message received (no data)")
         end
 
+
         if not INITIALIZED then
             INITIALIZED = true
 
@@ -38,7 +39,7 @@ Handlers.add("Initialize",
 
 )
 
-Handlers.add("SaveScore", 
+Handlers.add("SaveScore",
     Handlers.utils.hasMatchingTag("Action", "SaveScore"),
     function(msg)
         if not INITIALIZED then
@@ -89,7 +90,7 @@ Handlers.add("SaveScore",
             if s.wallet == msg.From then
                 -- Update the existing score by adding the new score
                 s.score = s.score + score
-                s.timestamp = os.time()  -- Update the timestamp
+                s.timestamp = os.time() -- Update the timestamp
                 found = true
                 break
             end
@@ -118,7 +119,7 @@ Handlers.add("GetScore",
         if not INITIALIZED then
             Send({
                 Target = msg.From,
-            Data = json.encode({
+                Data = json.encode({
                     status = "error",
                     message = "Game not initialized"
                 })
@@ -151,6 +152,41 @@ Handlers.add("GetScore",
                 return
             end
         end
+    end
+)
+
+
+Handlers.add("GetAllScores",
+    Handlers.utils.hasMatchingTag("Action", "GetAllScores"),
+    function(msg)
+        print("Processing GetAllScores request for top 10 scores")
+
+        -- Get the top 10 scores
+        local allScores = {}
+        for i = 1, math.min(10, #SCORETABLE) do
+            table.insert(allScores, SCORETABLE[i])
+        end
+
+        if #allScores == 0 then
+            Send({
+                Target = msg.From,
+                Data = json.encode({
+                    status = "success",
+                    message = "No scores available",
+                    data = {}
+                })
+            })
+            return
+        end
+
+        Send({
+            Target = msg.From,
+            Data = json.encode({
+                status = "success",
+                message = "Top 10 scores retrieved successfully",
+                data = allScores
+            })
+        })
     end
 )
 
