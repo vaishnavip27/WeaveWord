@@ -166,24 +166,6 @@ export default function Navbar() {
               <Button
                 variant="ghost"
                 size="icon"
-                asChild
-                className="p-0 border-2 border-slate-600 rounded-full hover:bg-slate-800"
-              >
-                <Link
-                  href="/pages/profile"
-                  aria-label="Profile"
-                  onClick={(e) => {
-                    if (!handleNavigation("/pages/profile")) {
-                      e.preventDefault();
-                    }
-                  }}
-                >
-                  <User className="h-6 w-6" />
-                </Link>
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
                 className="p-0 border-2 border-slate-600 rounded-full hover:bg-slate-800"
                 onClick={() => setIsHelpOpen(true)}
                 aria-label="Help"

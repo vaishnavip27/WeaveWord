@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-[#241F25] text-white`}>
+      <body className={`${inter.className} bg-[#0E0E11] text-white`}>
         <div className="min-h-screen flex flex-col">
           <main className="flex-1">{children}</main>
           <Toaster />
