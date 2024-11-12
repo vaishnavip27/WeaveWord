@@ -97,7 +97,7 @@ export default function HomePage() {
           on the Arweave?
         </p>
         <Button
-          className={`relative rounded-full px-5 py-4 min-h-[60px] text-base font-medium text-black bg-slate-50 transition duration-200 hover:bg-slate-200 sm:px-8 sm:py-4 sm:text-lg md:px-10 md:py-5 md:text-xl button-with-shine ${
+          className={`relative rounded-full px-5 py-4 min-h-[60px] text-base font-medium text-white bg-slate-800 border border-slate-700 transition duration-200 hover:bg-slate-700 sm:px-8 sm:py-4 sm:text-lg md:px-10 md:py-5 md:text-xl button-with-shine ${
             isConnecting ? "cursor-not-allowed opacity-50" : ""
           }`}
           onClick={connectWallet}
@@ -125,7 +125,7 @@ export default function HomePage() {
           background: linear-gradient(
             45deg,
             rgba(255, 255, 255, 0) 30%,
-            rgba(255, 255, 255, 0.8),
+            rgba(255, 255, 255, 0.3),
             rgba(255, 255, 255, 0) 70%
           );
           transform: rotate(45deg);
