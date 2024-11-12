@@ -189,16 +189,16 @@ export default function MainPage() {
   }
 
   return (
-    <div className=" bg-[#0E0E11] text-[#E4E4E4] flex flex-col items-center justify-center">
-      <main className="flex flex-col items-center justify-center w-full max-w-xl mx-auto px-4 py-16 md:py-20 rounded-md">
-        <div className="w-full flex justify-end mb-2">
-          <div className="bg-gray-900 px-5 py-3 rounded-lg text-sm sm:text-base border border-gray-700">
+    <div className="bg-[#0E0E11] text-[#E4E4E4] flex flex-col items-center justify-center min-h-screen">
+      <main className="flex flex-col items-center justify-center w-full max-w-xl lg:max-w-3xl xl:max-w-4xl mx-auto px-4 py-16 md:py-20 lg:py-24 rounded-md">
+        <div className="w-full flex justify-end mb-2 lg:mb-4">
+          <div className="bg-gray-900 px-4 py-2 md:px-5 md:py-3 rounded-lg text-sm md:text-base lg:text-lg border border-gray-700">
             <span className="font-bold">Score: </span>
             <span>{score}</span>
           </div>
         </div>
 
-        <div className="w-full flex flex-col items-center gap-4">
+        <div className="w-full flex flex-col items-center gap-4 lg:gap-6">
           <Grid
             guesses={guesses}
             currentGuess={currentGuess}
@@ -215,11 +215,11 @@ export default function MainPage() {
             targetWord={targetWord}
           />
 
-          <div className="text-center mt-4 space-x-2">
+          <div className="text-center mt-4 space-x-2 lg:space-x-4">
             {gameStatus === "won" && (
               <Button
                 onClick={saveScore}
-                className="bg-gray-700 hover:bg-gray-600 px-4 py-2 md:px-5 md:py-3 text-sm md:text-base"
+                className="bg-gray-700 hover:bg-gray-600 px-4 py-2 md:px-5 md:py-3 lg:px-6 lg:py-4 text-sm md:text-base lg:text-lg"
                 disabled={isSavingScore}
               >
                 {isSavingScore ? "Saving..." : "Save Score"}
@@ -227,14 +227,14 @@ export default function MainPage() {
             )}
             <Button
               onClick={startNewGame}
-              className="bg-gray-700 hover:bg-gray-600 px-4 py-2 md:px-5 md:py-3 text-sm md:text-base"
+              className="bg-gray-700 hover:bg-gray-600 px-4 py-2 md:px-5 md:py-3 lg:px-6 lg:py-4 text-sm md:text-base lg:text-lg"
               disabled={isLoading}
             >
               Play Again
             </Button>
             <Button
               onClick={fetchScore}
-              className="bg-gray-700 hover:bg-gray-600 px-4 py-2 md:px-5 md:py-3 text-sm md:text-base"
+              className="bg-gray-700 hover:bg-gray-600 px-4 py-2 md:px-5 md:py-3 lg:px-6 lg:py-4 text-sm md:text-base lg:text-lg"
               disabled={isScoreFetching}
             >
               {isScoreFetching ? "Fetching..." : "Fetch Score"}
@@ -243,7 +243,7 @@ export default function MainPage() {
         </div>
       </main>
 
-      <footer className="text-center py-4 text-gray-500 text-sm sm:text-base">
+      <footer className="text-center py-4 text-gray-500 text-sm md:text-base lg:text-lg">
         <p>© copyright 2024 | made by vaishnavi</p>
       </footer>
     </div>
