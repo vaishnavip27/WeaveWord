@@ -25,8 +25,54 @@ export default function HomePage() {
   };
 
   const connectWallet = async () => {
-    setIsConnecting(true);
-    // Your wallet connection code here
+    try {
+      setIsConnecting(true);
+
+      if (!window.arweaveWallet) {
+        console.log("ArConnect not found");
+        toast({
+          title: "ArConnect Not Found",
+          description: "Please install ArConnect to continue",
+          variant: "destructive",
+        });
+        window.open("https://arconnect.io", "_blank");
+        return;
+      }
+
+      await window.arweaveWallet.connect([
+        "ACCESS_ADDRESS",
+        "SIGN_TRANSACTION",
+        "DISPATCH",
+        "ACCESS_PUBLIC_KEY",
+      ]);
+
+      const address = await window.arweaveWallet.getActiveAddress();
+
+      if (!address) {
+        throw new Error("No wallet address found");
+      }
+
+      console.log("Wallet connected successfully:", address);
+
+      toast({
+        title: "Success",
+        description: "Wallet connected successfully!",
+      });
+
+      setTimeout(() => {
+        router.push("/pages/main");
+      }, 1000);
+    } catch (error) {
+      console.error("Connection error:", error);
+      toast({
+        title: "Error",
+        description: "Failed to connect wallet. Please try again.",
+        variant: "destructive",
+      });
+      await disconnectWallet();
+    } finally {
+      setIsConnecting(false);
+    }
   };
 
   return (
@@ -51,7 +97,7 @@ export default function HomePage() {
           on the Arweave?
         </p>
         <Button
-          className={`relative rounded-full px-3 py-4 min-h-[64px]  text-md font-medium text-white bg-gray-800 border border-slate-700 transition duration-200 hover:bg-slate-600 sm:px-8 sm:py-4 sm:text-lg md:px-10 md:py-5 md:text-xl ${
+          className={`relative rounded-full px-5 py-4 min-h-[60px] text-base font-medium text-black bg-slate-50 transition duration-200 hover:bg-slate-200 sm:px-8 sm:py-4 sm:text-lg md:px-10 md:py-5 md:text-xl button-with-shine ${
             isConnecting ? "cursor-not-allowed opacity-50" : ""
           }`}
           onClick={connectWallet}
@@ -72,21 +118,23 @@ export default function HomePage() {
         .button-with-shine::before {
           content: "";
           position: absolute;
-          top: -100%;
-          left: 0;
+          top: -50%;
+          left: -50%;
           width: 200%;
           height: 200%;
           background: linear-gradient(
             45deg,
             rgba(255, 255, 255, 0) 30%,
-            rgba(255, 255, 255, 0.3),
+            rgba(255, 255, 255, 0.8),
             rgba(255, 255, 255, 0) 70%
           );
           transform: rotate(45deg);
-          animation: shine 1.5s linear infinite;
+          opacity: 0;
+          transition: opacity 0.2s ease;
         }
         .button-with-shine:hover::before {
-          animation-play-state: running;
+          opacity: 1;
+          animation: shine 1.5s linear infinite;
         }
         @keyframes shine {
           0% {
