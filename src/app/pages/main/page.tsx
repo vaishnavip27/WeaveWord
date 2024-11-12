@@ -24,25 +24,16 @@ export default function MainPage() {
   const [score, setScore] = useState<number>(0);
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
 
-
   useEffect(() => {
     checkWalletAndStartGame();
   }, []);
-
-  useEffect(() => {
-    if (walletAddress) {
-      console.log("Updated walletAddress:", walletAddress);
-    }
-  }, [walletAddress]);
 
   useEffect(() => {
     const initAO = async () => {
       if (walletAddress) {
         await initializeAO(walletAddress);
         const fetchedScore = await fetchPlayerScore();
-        console.log(fetchedScore);
-        // Fix: Ensure fetchedScore is a number, or provide a default value
-        setScore(typeof fetchedScore === 'number' ? fetchedScore : 0);
+        setScore(typeof fetchedScore === "number" ? fetchedScore : 0);
       }
     };
 
@@ -63,9 +54,7 @@ export default function MainPage() {
         router.push("/");
         return;
       }
-      console.log(address);
       setWalletAddress(address);
-      console.log(walletAddress);
       startNewGame();
     } catch (error) {
       console.error("Wallet check error:", error);
@@ -73,11 +62,8 @@ export default function MainPage() {
     }
   };
 
-
-
   const startNewGame = () => {
     const randomWord = WORD_LIST[Math.floor(Math.random() * WORD_LIST.length)];
-    console.log("Target Word:", randomWord); // For testing
     setTargetWord(randomWord);
     setGuesses([]);
     setCurrentGuess("");
@@ -88,11 +74,8 @@ export default function MainPage() {
     setIsScoreFetching(true);
     try {
       const fetchedScore = await fetchPlayerScore();
-
-      // Ensure the fetched score is a number
-      if (typeof fetchedScore === 'number') {
+      if (typeof fetchedScore === "number") {
         setScore(fetchedScore);
-        console.log("Score:", fetchedScore);
         toast({
           title: "Score Fetched",
           description: `Your current score is ${fetchedScore}!`,
@@ -115,7 +98,6 @@ export default function MainPage() {
   const saveScore = async () => {
     setIsSavingScore(true);
     try {
-      // Fix: Check if walletAddress is not null before using it
       if (walletAddress) {
         await saveScoreInProcess(walletAddress, 100);
         toast({
@@ -162,14 +144,12 @@ export default function MainPage() {
 
       if (isWon) {
         setGameStatus("won");
-        await storeGameResult(true, newGuesses.length);
         toast({
           title: "Congratulations!",
           description: "You've won! 🎉",
         });
       } else if (isLost) {
         setGameStatus("lost");
-        await storeGameResult(false, 6);
         toast({
           title: "Game Over",
           description: `The word was ${targetWord}. Better luck next time!`,
@@ -184,23 +164,6 @@ export default function MainPage() {
       });
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  const storeGameResult = async (won: boolean, guessCount: number) => {
-    if (!walletAddress) return;
-
-    try {
-      const data = {
-        word: targetWord,
-        won,
-        guesses: guessCount,
-        timestamp: Date.now(),
-      };
-
-      console.log("Storing game result:", data);
-    } catch (error) {
-      console.error("Error storing game result:", error);
     }
   };
 
@@ -226,42 +189,37 @@ export default function MainPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#241F25] text-[#E4E4E4] flex flex-col">
-      <main className="flex-1 flex flex-col items-center justify-center w-full mx-auto px-4 py-8">
-        <div className="w-full flex flex-col items-center justify-center gap-4">
-          <div className="w-full flex justify-end mb-2">
-            <div className="bg-gray-700 px-4 py-2 rounded-lg">
-              <span className="font-bold">Score: </span>
-              <span>{score}</span>
-            </div>
+    <div className=" bg-[#0E0E11] text-[#E4E4E4] flex flex-col items-center justify-center">
+      <main className="flex flex-col items-center justify-center w-full max-w-xl mx-auto px-4 py-16 md:py-20 rounded-md">
+        <div className="w-full flex justify-end mb-2">
+          <div className="bg-gray-900 px-5 py-3 rounded-lg text-sm sm:text-base border border-gray-700">
+            <span className="font-bold">Score: </span>
+            <span>{score}</span>
           </div>
+        </div>
 
-          <div className="w-full">
-            <Grid
-              guesses={guesses}
-              currentGuess={currentGuess}
-              gameStatus={gameStatus}
-              targetWord={targetWord}
-            />
-          </div>
+        <div className="w-full flex flex-col items-center gap-4">
+          <Grid
+            guesses={guesses}
+            currentGuess={currentGuess}
+            gameStatus={gameStatus}
+            targetWord={targetWord}
+          />
+          <Keyboard
+            currentGuess={currentGuess}
+            setCurrentGuess={setCurrentGuess}
+            submitGuess={submitGuess}
+            gameStatus={gameStatus}
+            isLoading={isLoading}
+            guesses={guesses}
+            targetWord={targetWord}
+          />
 
-          <div className="w-full">
-            <Keyboard
-              currentGuess={currentGuess}
-              setCurrentGuess={setCurrentGuess}
-              submitGuess={submitGuess}
-              gameStatus={gameStatus}
-              isLoading={isLoading}
-              guesses={guesses}
-              targetWord={targetWord}
-            />
-          </div>
-
-          <div className="text-center mt-4 space-x-3">
+          <div className="text-center mt-4 space-x-2">
             {gameStatus === "won" && (
               <Button
                 onClick={saveScore}
-                className="bg-gray-700 hover:bg-gray-600 px-5 py-3"
+                className="bg-gray-700 hover:bg-gray-600 px-4 py-2 md:px-5 md:py-3 text-sm md:text-base"
                 disabled={isSavingScore}
               >
                 {isSavingScore ? "Saving..." : "Save Score"}
@@ -269,14 +227,14 @@ export default function MainPage() {
             )}
             <Button
               onClick={startNewGame}
-              className="bg-gray-700 hover:bg-gray-600 px-5 py-3"
+              className="bg-gray-700 hover:bg-gray-600 px-4 py-2 md:px-5 md:py-3 text-sm md:text-base"
               disabled={isLoading}
             >
               Play Again
             </Button>
             <Button
               onClick={fetchScore}
-              className="bg-gray-700 hover:bg-gray-600 px-5 py-3"
+              className="bg-gray-700 hover:bg-gray-600 px-4 py-2 md:px-5 md:py-3 text-sm md:text-base"
               disabled={isScoreFetching}
             >
               {isScoreFetching ? "Fetching..." : "Fetch Score"}
@@ -285,8 +243,8 @@ export default function MainPage() {
         </div>
       </main>
 
-      <footer className="text-center py-4 text-gray-400">
-        <p>Built by Vaishnavi</p>
+      <footer className="text-center py-4 text-gray-500 text-sm sm:text-base">
+        <p>© copyright 2024 | made by vaishnavi</p>
       </footer>
     </div>
   );

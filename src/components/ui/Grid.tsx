@@ -20,21 +20,16 @@ const getLetterState = (
   const targetArray = targetWord.split("");
   const guessArray = guess.split("");
 
-  // First, mark all correct positions
   if (targetWord[position] === letter) {
     return "correct";
   }
 
-  // If not correct, check if it's present elsewhere
-  // Count how many times this letter appears in the target
   const letterCount = targetArray.filter((l) => l === letter).length;
 
-  // Count how many times this letter is correctly placed before this position
   const correctPlacements = guessArray
     .slice(0, position)
     .filter((l, i) => l === letter && targetArray[i] === letter).length;
 
-  // Count how many times this letter has been marked as present before this position
   const presentPlacements = guessArray
     .slice(0, position)
     .filter(
@@ -42,7 +37,6 @@ const getLetterState = (
         l === letter && targetArray[i] !== letter && targetArray.includes(l)
     ).length;
 
-  // If the letter exists in target word and we haven't exceeded the total count
   if (
     targetWord.includes(letter) &&
     correctPlacements + presentPlacements < letterCount
@@ -56,7 +50,7 @@ const getLetterState = (
 const getBackgroundColor = (state: LetterState): string => {
   switch (state) {
     case "correct":
-      return "#6D994A";
+      return "#059669";
     case "present":
       return "#695FA3";
     case "absent":
@@ -100,7 +94,6 @@ export const Grid: React.FC<GridProps> = ({
         display: "inline-block",
         width: "fit-content",
         margin: "0 auto",
-        marginLeft: "630px",
       }}
     >
       {/* Previous guesses */}

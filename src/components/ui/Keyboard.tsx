@@ -70,9 +70,9 @@ export const Keyboard: React.FC<KeyboardProps> = ({
       return "bg-[#5749a6] hover:bg-amber-400 text-white";
     }
     if (isUsed) {
-      return "bg-gray-600 hover:bg-gray-500 text-gray-300";
+      return "bg-[#2c282d] hover:bg-gray-500 text-gray-300 border border-white/20";
     }
-    return "bg-gray-400 hover:bg-gray-300 text-gray-800";
+    return "bg-[#514E52] hover:bg-gray-300 text-white";
   };
 
   return (

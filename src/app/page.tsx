@@ -1,8 +1,5 @@
-/// <reference types="@types/arconnect" />
-
 "use client";
 
-import GameName from "../components/ui/gameName";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "@/components/ui/use-toast";
@@ -42,7 +39,6 @@ export default function HomePage() {
         return;
       }
 
-      // Connect wallet with necessary permissions
       await window.arweaveWallet.connect([
         "ACCESS_ADDRESS",
         "SIGN_TRANSACTION",
@@ -63,7 +59,6 @@ export default function HomePage() {
         description: "Wallet connected successfully!",
       });
 
-      // Navigate to main page
       setTimeout(() => {
         router.push("/pages/main");
       }, 1000);
@@ -81,27 +76,30 @@ export default function HomePage() {
   };
 
   return (
-    <div className=" w-full flex items-center justify-center p-4 sm:p-6 md:p-8 lg:p-12 flex-col bg-[#241F25] text-[#E4E4E4] mt-10">
-      <div className="w-full max-w-md  flex items-center justify-center">
-        <GameName />
-      </div>
-      <div className="mt-6 sm:mt-12 md:mt-16 lg:mt-20 text-center">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-4">
+    <div className="flex min-h-screen items-center justify-center bg-[#0E0E11] p-4">
+      <div className="max-w-md text-center text-[#E4E4E4]">
+        <div className="mb-8 text-4xl font-black sm:text-5xl md:text-6xl">
+          WORDWEAVE
+        </div>
+        <h1 className="mb-4 text-xl font-semibold sm:text-3xl md:text-4xl lg:text-5xl">
           Hey People!
         </h1>
-        <p className="text-lg sm:text-xl md:text-2xl mb-1">
+        <p className="mb-1 text-lg sm:text-xl md:text-2xl lg:text-2xl font-semibold mt-6">
           Ready to test your word skills
         </p>
-        <p className="text-lg sm:text-xl md:text-2xl">on the blockchain?</p>
+        <p className="mb-8 text-lg sm:text-xl md:text-2xl lg:text-2xl font-semibold">
+          on the Arweave?
+        </p>
+        <Button
+          className={`rounded-full bg-slate-50 px-5 py-4 text-base font-medium text-black transition-colors duration-200 hover:bg-slate-200 sm:px-8 sm:py-4 sm:text-lg md:px-10 md:py-5 md:text-xl ${
+            isConnecting ? "cursor-not-allowed opacity-50" : ""
+          }`}
+          onClick={connectWallet}
+          disabled={isConnecting}
+        >
+          {isConnecting ? "Connecting..." : "Connect Wallet"}
+        </Button>
       </div>
-      <Button
-        className={` sm:mt-8 md:mt-10 px-6 py-6 text-sm sm:text-base md:text-lg font-medium rounded-full bg-slate-50 text-black hover:bg-slate-200 transition-colors duration-200
-          ${isConnecting ? "opacity-50 cursor-not-allowed" : ""}`}
-        onClick={connectWallet}
-        disabled={isConnecting}
-      >
-        {isConnecting ? "Connecting..." : "Connect Wallet"}
-      </Button>
     </div>
   );
 }

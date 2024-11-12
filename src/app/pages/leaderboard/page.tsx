@@ -83,7 +83,7 @@ export default function Leaderboard() {
   );
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-[#0E0E11]">
       <div className="container mx-auto px-4 py-8 text-white">
         <h1 className="text-3xl font-bold mb-6 text-white">Leaderboard</h1>
         <Card className="bg-black border border-gray-800">
